@@ -1,0 +1,263 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9DD823A21D82F195003B2FAC /* AMKEncoderViewLive.xcscheme in Resources */ = {isa = PBXBuildFile; fileRef = 9DD823A11D82F195003B2FAC /* AMKEncoderViewLive.xcscheme */; };
+		9DD823A51D82F195003B2FAC /* AMKEncoderViewLive.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DD823A41D82F195003B2FAC /* AMKEncoderViewLive.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		9DD8239D1D82F195003B2FAC /* AMKEncoderViewLive.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AMKEncoderViewLive.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		9DD823A11D82F195003B2FAC /* AMKEncoderViewLive.xcscheme */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = AMKEncoderViewLive.xcscheme; path = AMKEncoderViewLive.xcodeproj/xcshareddata/xcschemes/AMKEncoderViewLive.xcscheme; sourceTree = SOURCE_ROOT; };
+		9DD823A31D82F195003B2FAC /* AMKEncoderViewLive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMKEncoderViewLive.h; sourceTree = "<group>"; };
+		9DD823A41D82F195003B2FAC /* AMKEncoderViewLive.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AMKEncoderViewLive.m; sourceTree = "<group>"; };
+		9DD823A61D82F195003B2FAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		9DD823951D82F195003B2FAC = {
+			isa = PBXGroup;
+			children = (
+				9DD8239F1D82F195003B2FAC /* AMKEncoderViewLive */,
+				9DD8239E1D82F195003B2FAC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9DD8239E1D82F195003B2FAC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9DD8239D1D82F195003B2FAC /* AMKEncoderViewLive.xcplugin */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9DD8239F1D82F195003B2FAC /* AMKEncoderViewLive */ = {
+			isa = PBXGroup;
+			children = (
+				9DD823A31D82F195003B2FAC /* AMKEncoderViewLive.h */,
+				9DD823A41D82F195003B2FAC /* AMKEncoderViewLive.m */,
+				9DD823A61D82F195003B2FAC /* Info.plist */,
+				9DD823A01D82F195003B2FAC /* Supporting Files */,
+			);
+			path = AMKEncoderViewLive;
+			sourceTree = "<group>";
+		};
+		9DD823A01D82F195003B2FAC /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9DD823A11D82F195003B2FAC /* AMKEncoderViewLive.xcscheme */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9DD8239C1D82F195003B2FAC /* AMKEncoderViewLive */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9DD823A91D82F196003B2FAC /* Build configuration list for PBXNativeTarget "AMKEncoderViewLive" */;
+			buildPhases = (
+				9DD8239A1D82F195003B2FAC /* Sources */,
+				9DD8239B1D82F195003B2FAC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AMKEncoderViewLive;
+			productName = AMKEncoderViewLive;
+			productReference = 9DD8239D1D82F195003B2FAC /* AMKEncoderViewLive.xcplugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9DD823961D82F195003B2FAC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "Bruno Garelli";
+				TargetAttributes = {
+					9DD8239C1D82F195003B2FAC = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+				};
+			};
+			buildConfigurationList = 9DD823991D82F195003B2FAC /* Build configuration list for PBXProject "AMKEncoderViewLive" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 9DD823951D82F195003B2FAC;
+			productRefGroup = 9DD8239E1D82F195003B2FAC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9DD8239C1D82F195003B2FAC /* AMKEncoderViewLive */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9DD8239B1D82F195003B2FAC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9DD823A21D82F195003B2FAC /* AMKEncoderViewLive.xcscheme in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9DD8239A1D82F195003B2FAC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9DD823A51D82F195003B2FAC /* AMKEncoderViewLive.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		9DD823A71D82F195003B2FAC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		9DD823A81D82F195003B2FAC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		9DD823AA1D82F196003B2FAC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = "$(HOME)";
+				INFOPLIST_FILE = AMKEncoderViewLive/Info.plist;
+				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
+				PRODUCT_BUNDLE_IDENTIFIER = ametric.AMKEncoderViewLive;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xcplugin;
+			};
+			name = Debug;
+		};
+		9DD823AB1D82F196003B2FAC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = "$(HOME)";
+				INFOPLIST_FILE = AMKEncoderViewLive/Info.plist;
+				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
+				PRODUCT_BUNDLE_IDENTIFIER = ametric.AMKEncoderViewLive;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xcplugin;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9DD823991D82F195003B2FAC /* Build configuration list for PBXProject "AMKEncoderViewLive" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9DD823A71D82F195003B2FAC /* Debug */,
+				9DD823A81D82F195003B2FAC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9DD823A91D82F196003B2FAC /* Build configuration list for PBXNativeTarget "AMKEncoderViewLive" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9DD823AA1D82F196003B2FAC /* Debug */,
+				9DD823AB1D82F196003B2FAC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9DD823961D82F195003B2FAC /* Project object */;
+}
