@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreFoundation/CoreFoundation.h>
 #import "AMKEncoderViewLive.h"
-#import <CoreFoundation/CoreFoundation.h>
+#import <AppKit/AppKitDefines.h>
 
 static AMKEncoderViewLive *sharedPlugin;
 
@@ -92,7 +92,7 @@ static AMKEncoderViewLive *sharedPlugin;
 // Sample Action, for menu item:
 - (void)doMenuAction
 {
-    NSString *path = @"/Users/bgarelli/Library/Developer/CoreSimulator/Devices/AAF9BE99-DC9E-4822-8C6B-F6E31DCBE133/data/Containers/Data/Application/EBEC5627-D4C5-4F10-9DBB-E6BAB6AF3C90/Documents/plugingIn.txt";
+    NSString *path = @"/Users/bgarelli/Library/Developer/CoreSimulator/Devices/AAF9BE99-DC9E-4822-8C6B-F6E31DCBE133/data/Containers/Data/Application/DDB0390B-F977-45DD-A92A-B287ED2ED340/Documents/plugingIn.txt";
     [[NSFileManager defaultManager] createFileAtPath:path contents:nil attributes:nil];
     NSString *str = @"PLUGPLUGPLUG";
     [str writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:nil];
@@ -105,13 +105,19 @@ static AMKEncoderViewLive *sharedPlugin;
 //name	__NSCFConstantString *	@"NSControlTextDidEndEditingNotification"	0x00007fff7870b2b0
 //((IDEInspectorBasicStringProperty *)((IDETextFieldActionFilter *)((NSTextField *)notification.object).delegate).target)
 - (void)handleNotification:(NSNotification *)notification {
-    if (![self.notificationSet containsObject:notification.name]) {
-        if (notification.name == @"") {
-            IDEInspectorBasicStringProperty *propInspect = ((IDEInspectorBasicStringProperty *)((IDETextFieldActionFilter *)((NSTextField *)notification.object).delegate).target);
+    NSString *name = notification.name;
+    //if (![self.notificationSet containsObject:notification.name]) {
+        if ([notification.name  isEqual: @"IBDocumentDidAddConnectionNotification"]) {
+            /*IDEInspectorBasicStringProperty *propInspect = ((IDEInspectorBasicStringProperty *)((IDETextFieldActionFilter *)((NSTextField *)notification.object).delegate).target);*/
+            NSDictionary *info = notification.userInfo;
+            NSObject *obj = notification.object;
+            //NSLog([NSApp orderedDocuments]);
+            NSLog(@"%@, @%, %@", name, info, obj);
         }
-        NSLog(@"%@, %@", notification.name, [notification.object class]);
-        [self.notificationSet addObject:notification.name];
-    }
+    
+        //NSLog(@"%@, %@", notification.name, [notification.object class]/*notification.object*/);
+        //[self.notificationSet addObject:notification.name];
+    //}
 }
 
 - (void)commitEditingWithDelegate:(id)delegate didCommitSelector:(SEL)didCommitSelector contextInfo:(void *)contextInfo {
