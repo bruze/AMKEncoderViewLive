@@ -145,6 +145,9 @@ static const NSString *DOCUMENT_CONNECTION_KEY = @"IBDocumentConnectionKey";
     NSDictionary *info = notification.userInfo;
     NSObject *obj = notification.object;
     if ([notification.name isEqual:@"DVTUndoManagerDidAddTopLevelChangeGroupNotification"]) {
+        id doc = [obj valueForKey:@"document"];
+        id entry = [[doc valueForKey:@"globalEntryPointKeyPathsToIndicators"] valueForKey:@"designatedEntryPoint"];
+        id indicated = [entry valueForKey:@"indicatedEntryPoint"];
         NSLog(@"%@, @%, %@", name, info, obj);
     }
     /*if ([notification.name isEqual:@"IDENavigableItemCoordinatorPropertyValuesChangeNotification"]) {
@@ -167,7 +170,7 @@ static const NSString *DOCUMENT_CONNECTION_KEY = @"IBDocumentConnectionKey";
             
             [[NSFileManager defaultManager] createFileAtPath:path contents:nil attributes:nil];
             NSString *str = @"PLUGPLUGPLUG";
-            [str writeToFile:[path stringByAppendingString:sourceName] atomically:YES encoding:NSUTF8StringEncoding error:nil];
+            //[str writeToFile:[path stringByAppendingString:sourceName] atomically:YES encoding:NSUTF8StringEncoding error:nil];
             
             //NSLog(@"%@, @%, %@", name, info, obj);
         }
