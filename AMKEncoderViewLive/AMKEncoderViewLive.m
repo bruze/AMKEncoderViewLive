@@ -14,11 +14,17 @@ static AMKEncoderViewLive *sharedPlugin;
 static const NSString *OUTLET_CONNECTION_MADE = @"IBDocumentDidAddConnectionNotification";
 static const NSString *DOCUMENT_CONNECTION_KEY = @"IBDocumentConnectionKey";
 @interface AMKEncoderViewLive ()
+- (NSDictionary *)parseLabel:(id)abstractLabel;
 @property (nonatomic, strong) NSMutableSet *notificationSet;
 @end
 
 @implementation AMKEncoderViewLive
 
+- (NSDictionary *)parseLabel:(id)abstractLabel {
+    NSMutableDictionary *parsedData = [[NSMutableDictionary alloc] init];
+    NSString *text = [abstractLabel valueForKey:@"text"];
+    return parsedData;
+}
 #pragma mark - Initialization
 
 + (void)pluginDidLoad:(NSBundle *)plugin
@@ -113,75 +119,84 @@ static const NSString *DOCUMENT_CONNECTION_KEY = @"IBDocumentConnectionKey";
                        @"NSBundleDidLoadNotification", @"NSUserDefaultsDidChangeNotification", @"_NSThreadDidStartNotification", @"_NSPersistentStoreCoordinatorStoresDidChangePrivateNotification",
                        @"IDEIndexIsIndexingWorkspaceNotification", @"IDEIndexingPrebuildControllerBuildDidStopNotification", @"CurrentExecutionTrackerCompletedNotification", @"IDEBuildOperationDidGenerateOutputFilesNotification", @"XCBuildContextDidCreateDependencyGraphNotification",
                        @"_NSThreadDidStartNotification", @"NSFileHandleDataAvailableNotification", @"NSTextStorageWillProcessEditingNotification",
-                       @"NSMenuDidAddItemNotification",
-                       @"NSMenuDidChangeItemNotification",
+                       @"NSMenuDidAddItemNotification", @"IDEIntegrityLogDataSourceDidChangeNotification",
+                       @"NSMenuDidChangeItemNotification", @"NSTextViewWillChangeNotifyingTextViewNotification",
                        @"NSViewFrameDidChangeNotification",
                        @"NSThreadWillExitNotification", @"NSApplicationDidResignActiveNotification", @"NSWindowDidResignKeyNotification", @"NSApplicationWillResignActiveNotification", @"NSMenuDidRemoveItemNotification" ,@"NSMenuDidRemoveAllItemsNotification",@"NSViewDidUpdateTrackingAreasNotification", @"XCBuildContextDidFinishSettingTargetSnapshotNotification", @"IDEBuildOperationDidStopNotification",@"PBXTargetProductReferenceDidChangeNotification",@"IDEIndexDidChangeStateNotification",
-                       
-                       @"ExecutionEnvironmentLastBuildCompletedNotification",
+                       @"PBXUnarchiverDidFinishUnarchivingNotification",
+                       @"ExecutionEnvironmentLastBuildCompletedNotification", @"NSTextStorageDidProcessEditingNotification",
                        @"XCBuildContextDidFinishSettingTargetSnapshotNotification",
-                       @"IDESourceControlIDEDidUpdateLocalStatusNotification",
-                       @"IDEWorkspaceDocumentWillWriteStateDataNotification",
-                       @"IDESourceControlIDEWillUpdateLocalStatusNotification",
-                       @"NSThreadWillExitNotification",
+                       @"IDESourceControlIDEDidUpdateLocalStatusNotification", @"IDEEditorDocumentDidSaveNotification",
+                       @"IDEWorkspaceDocumentWillWriteStateDataNotification", @"NSKeyUpNotification",
+                       @"IDESourceControlIDEWillUpdateLocalStatusNotification", @"NSUndoManagerDidCloseUndoGroupNotification",
+                       @"NSThreadWillExitNotification", @"DVTModelObjectGraphWillCoalesceChangesNotification", @"DVTModelObjectGraphDidCoalesceChangesNotification",
+                       @"NSTaskDidTerminateNotification", @"NSPortDidBecomeInvalidNotification",
+                       @"DVTDeviceUsabilityDidChangeNotification", @"IDEEditorDocumentWillCloseNotification",
+                       @"IDEEditorDocumentWillClose_ForNavigableItemCoordinatorEyesOnly_Notification", @"IDEEditorDocumentWillCloseNotification",  @"NSWindowDidResizeNotification", @"DVTModelObjectGraphObjectsDidChangeNotificationName", @"NSToolbarWillAddItemNotification", @"IDEKeyBindingSetWillActivateNotification", @"IDEKeyBindingSetDidActivateNotification", @"NSOutlineViewColumnDidResizeNotification",
+                       @"NSSplitViewDidResizeSubviewsNotification", @"IDEVariablesViewDidHide", @"NSSplitViewWillResizeSubviewsNotification", @"IDEVariablesViewDidUnhide", @"kC3DNotificationEngineContextInvalidatePasses",  @"NSViewBoundsDidChangeNotification",
+                       @"IBDocumentDidAddObjectNotification", @"IBDocumentDidAddObjectToGroupNotification", @"NSTableViewColumnDidResizeNotification", @"NSOutlineViewItemWillExpandNotification", @"NSOutlineViewItemDidExpandNotification", @"IDENavigableItemCoordinatorWillForgetItemsNotification", @"DVTCertificateNotification_CertificatesChanged", @"IDENavigableItemCoordinatorDidForgetItemsNotification", @"XCProfileChangeEventNotification", @"IDEBlueprintsWillBulkChangeNotification", @"DVTProvisioningProfileManagerDidAdd", @"DVTProvisioningProfileManagerDidRemove", @"IDEIndexWillIndexWorkspaceNotification", @"IDEIndexProductInfoRegistered", @"IDEIntegrityLogDataSourceDidChangeNotification",  @"DVTSigningCertificateManagerCertificatesChangedNotification", @"XCPropertyInfoContext_WillBeDiscardedNotification", @"PBXTargetBuildSettingsDidChangeNotification", @"IDEBlueprintsDidChangeNotification", @"IDEIndexProductInfoUpdated", @"IDEIndexProductInfoRegistered", @"IDESourceControlDidScanWorkspaceNotification", @"WebPreferencesChangedNotification", @"IDEBuildOperationWillStartNotification", @"IDEQuickHelpContentChangedNotification", @"NSPortDidBecomeInvalidNotification", @"DVTLibraryDidLoadAssets", @"IDEIndexDidChangeNotification", @"IDEControlGroupDidChangeNotificationName", @"IDESchemeActionRunnableDidChangeNotification", @"IDETextIndexDidBeginIndexingNotification", @"NSWindowDidResignMainNotification",
+                       @"IDEEditorDocumentIsEditedStatusDidChangeNotification", @"IBDocumentIssuesDidChange", @"NSControlTextDidChangeNotification", @"NSControlTextDidBeginEditingNotification", @"NSMouseEnteredNotification", @"NSMouseExitedNotification", @"NSGestureEventMaskChanged",
+                       @"NSApplicationWillBecomeActiveNotification", @"NSWindowDidBecomeMainNotification", @"NSWindowDidBecomeKeyNotification", @"NSOutlineViewSelectionDidChangeNotification", @"XCPropertyInfoContext_DictionaryWasAdded", @"IDEEditorDocumentWillSaveNotification", @"IDENavigableItemCoordinatorArrangedObjectGraphChangeNotification", @"IDEEditorDocumentShouldCommitEditingNotification", @"IBSourceCodeClassProviderWillBeginParsing", @"NSTextViewDidChangeSelectionNotification", @"IDETextIndexDidFinishIndexingNotification", @"IDEEditorDocumentIsEditedStatusDidChangeNotification", @"IDEEditorDocumentHasEditsSinceLastUserInitiatedSaveStatusChangedNotification", @"IDEIndexDidChangeNotification", @"DEKeyBindingSetWillActivateNotification", @"IDEKeyBindingSetDidActivateNotification", @"DVTGlobalReplaceStringDidChangeNotification", @"IDENavigableItemCoordinatorDidForgetItemsNotification", @"NSTextDidBeginEditingNotification", @"NSApplicationDidBecomeActiveNotification", @"IDENavigableItemCoordinatorPropertyValuesChangeNotification", @"NSUndoManagerCheckpointNotification", @"IDEIndexDidIndexWorkspaceNotification", @"DVTUndoManagerDidAddTopLevelChangeGroupNotification",
+                       @"NSTextDidChangeNotification", @"IBDocumentDidFinishEditingNotification", @"NSConnectionDidInitializeNotification",
                                                  nil
                        ];
-    if (![notLog containsObject: notification.name]) {
-        //NSLog(name);
-    }
     //IBDocumentDidFinishEditingNotification //NSControlTextDidChangeNotification //DVTGlobalFindStringDidChangeNotification //IDENavigableItemCoordinatorPropertyValuesChangeNotification
     
     /*IBDocumentDidFinishEditingNotification
-    NSUndoManagerDidCloseUndoGroupNotification
+    
     DVTUndoManagerDidAddTopLevelChangeGroupNotification
     IBDocumentIssuesDidChange
     IDEEditorDocumentIsEditedStatusDidChangeNotification
     IDEEditorDocumentHasEditsSinceLastUserInitiatedSaveStatusChangedNotification
-    NSKeyUpNotification
-    DVTModelObjectGraphWillCoalesceChangesNotification
-    DVTModelObjectGraphObjectsDidChangeNotificationName
+    
      DVTModelObjectGraphDidCoalesceChangesNotification
      IDENavigableItemCoordinatorPropertyValuesChangeNotification*/
     NSDictionary *info = notification.userInfo;
     NSObject *obj = notification.object;
+    if (([notification.name isEqual:@"NSControlTextDidEndEditingNotification"]) /*|| ([notification.name isEqual:@""])*/) {
+        id target = [[obj valueForKey:@"delegate"] valueForKey:@"target"];
+        NSString *keyPath = [[target valueForKey:@"valueKeyPath"] valueForKey:@"observationKeyPath"];
+        NSString *text = [[target valueForKey:@"textField"] valueForKey:@"stringValue"];
+        if ([keyPath isEqual:@"storeID"]) {
+            
+        }
+        NSLog(@"%@, @%, %@", name, info, obj);
+    }
+    /*if (![notLog containsObject: notification.name]) {
+        NSLog(name);
+    }*/
+    /*
     if ([notification.name isEqual:@"DVTUndoManagerDidAddTopLevelChangeGroupNotification"]) {
         id doc = [obj valueForKey:@"document"];
         id entry = [[doc valueForKey:@"globalEntryPointKeyPathsToIndicators"] valueForKey:@"designatedEntryPoint"];
         id indicated = [entry valueForKey:@"indicatedEntryPoint"];
         NSLog(@"%@, @%, %@", name, info, obj);
     }
-    /*if ([notification.name isEqual:@"IDENavigableItemCoordinatorPropertyValuesChangeNotification"]) {
-        id meKnow = nil;
-    }*/
-    //if (![self.notificationSet containsObject:notification.name]) {
-        if ([notification.name  isEqual: OUTLET_CONNECTION_MADE]) {
-            /*IDEInspectorBasicStringProperty *propInspect = ((IDEInspectorBasicStringProperty *)((IDETextFieldActionFilter *)((NSTextField *)notification.object).delegate).target);*/
-            NSConnection *connection = (NSConnection *)info[DOCUMENT_CONNECTION_KEY];
-            NSString *connectionDetails = [connection description];
-            NSArray *components = [connectionDetails componentsSeparatedByString:@"=<"];
-            /*
-             IBUIView: 0x1197e3f20 (xbe-ue-P26) 'Super View'>  property=label  destination*/
-            const NSString *view = components[1];
-            NSUInteger low_range = [view rangeOfString:@"'"].location;
-            NSUInteger high_range = [view rangeOfString:@">"].location;
-            NSRange range = NSMakeRange(low_range + 1, high_range - low_range - 1);
-            NSString *sourceName = [view substringWithRange:range];
-            NSString *path = [(NSURL *)[[[NSApp orderedDocuments] objectAtIndex:1] fileURL] path];
-            
-            [[NSFileManager defaultManager] createFileAtPath:path contents:nil attributes:nil];
-            NSString *str = @"PLUGPLUGPLUG";
-            //[str writeToFile:[path stringByAppendingString:sourceName] atomically:YES encoding:NSUTF8StringEncoding error:nil];
-            
-            //NSLog(@"%@, @%, %@", name, info, obj);
-        }
-    
-        //NSLog(@"%@, %@", notification.name, [notification.object class]/*notification.object*/);
-        //[self.notificationSet addObject:notification.name];
-    //}
+    */
+
+    if ([notification.name  isEqual: OUTLET_CONNECTION_MADE]) {
+        NSConnection *connection = (NSConnection *)info[DOCUMENT_CONNECTION_KEY];
+        NSString *connectionDetails = [connection description];
+        NSArray *components = [connectionDetails componentsSeparatedByString:@"=<"];
+        /*
+         IBUIView: 0x1197e3f20 (xbe-ue-P26) 'Super View'>  property=label  destination*/
+        const NSString *view = components[1];
+        NSUInteger low_range = [view rangeOfString:@"'"].location;
+        NSUInteger high_range = [view rangeOfString:@">"].location;
+        NSRange range = NSMakeRange(low_range + 1, high_range - low_range - 1);
+        NSString *sourceName = [view substringWithRange:range];
+        NSString *path = [(NSURL *)[[[NSApp orderedDocuments] objectAtIndex:1] fileURL] path];
+        [self parseLabel: [connection valueForKey:@"destination"]];
+        [[NSFileManager defaultManager] createFileAtPath:path contents:nil attributes:nil];
+        NSString *str = @"PLUGPLUGPLUG";
+        //[str writeToFile:[path stringByAppendingString:sourceName] atomically:YES encoding:NSUTF8StringEncoding error:nil];
+    }
+    //[self.notificationSet addObject:notification.name];
 }
 
 - (void)commitEditingWithDelegate:(id)delegate didCommitSelector:(SEL)didCommitSelector contextInfo:(void *)contextInfo {
     NSLog(@"commitEditingWithDelegate");
 }
+
 
 @end
