@@ -16,6 +16,8 @@ static const NSString *DOCUMENT_CONNECTION_KEY = @"IBDocumentConnectionKey";
 @interface AMKEncoderViewLive ()
 - (NSDictionary *)parseLabel:(id)abstractLabel;
 @property (nonatomic, strong) NSMutableSet *notificationSet;
+@property (nonatomic, strong) NSMutableDictionary *parsedLabel;
+@property (nonatomic, strong) NSString *storePath;
 @end
 
 @implementation AMKEncoderViewLive
@@ -23,6 +25,24 @@ static const NSString *DOCUMENT_CONNECTION_KEY = @"IBDocumentConnectionKey";
 - (NSDictionary *)parseLabel:(id)abstractLabel {
     NSMutableDictionary *parsedData = [[NSMutableDictionary alloc] init];
     NSString *text = [abstractLabel valueForKey:@"text"];
+    parsedData[@"text"] = text;
+    id fontDescription = [abstractLabel valueForKey:@"fontDescription"];
+    NSString *fontName = [fontDescription valueForKey:@"description"];
+    parsedData[@"fontName"] = fontName;
+    id marshalled = [fontDescription valueForKey:@"marshalledValue"];
+    if (marshalled != nil) {
+        parsedData[@"pointSize"] = [[marshalled valueForKey:@"pointSize"] stringValue];
+        parsedData[@"type"] = [[marshalled valueForKey:@"type"] stringValue];
+        parsedData[@"weightCategory"] = [[marshalled valueForKey:@"weightCategory"] stringValue];
+    } else {
+        NSLog(@"NOT MARSHALL");
+    }
+    NSColor *textColor = [abstractLabel valueForKey:@"textColor"];
+    parsedData[@"textColor"] = [textColor description];
+    /*NSInteger numberOfColors = [[textColor colorSpace] numberOfColorComponents];
+    if (numberOfColors == 3) {
+        
+    }*/
     return parsedData;
 }
 #pragma mark - Initialization
@@ -46,6 +66,8 @@ static const NSString *DOCUMENT_CONNECTION_KEY = @"IBDocumentConnectionKey";
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:nil object:nil];
         
         self.notificationSet = [NSMutableSet new];
+        self.parsedLabel = [NSMutableDictionary new];
+        self.storePath = @"";
         // reference to plugin's bundle, for resource access
         _bundle = bundle;
         // NSApp may be nil if the plugin is loaded from the xcodebuild command line tool
@@ -151,17 +173,38 @@ static const NSString *DOCUMENT_CONNECTION_KEY = @"IBDocumentConnectionKey";
     
      DVTModelObjectGraphDidCoalesceChangesNotification
      IDENavigableItemCoordinatorPropertyValuesChangeNotification*/
+     
     NSDictionary *info = notification.userInfo;
     NSObject *obj = notification.object;
-    if (([notification.name isEqual:@"NSControlTextDidEndEditingNotification"]) /*|| ([notification.name isEqual:@""])*/) {
-        id target = [[obj valueForKey:@"delegate"] valueForKey:@"target"];
-        NSString *keyPath = [[target valueForKey:@"valueKeyPath"] valueForKey:@"observationKeyPath"];
-        NSString *text = [[target valueForKey:@"textField"] valueForKey:@"stringValue"];
-        if ([keyPath isEqual:@"storeID"]) {
-            
+    if (([notification.name isEqual:@"NSControlTextDidEndEditingNotification"]) ) {
+        id delegate = [obj valueForKey:@"delegate"];
+        //NSLog(@"%@", delegate);
+        if ([[delegate description] containsString:@"IDETextFieldActionFilter"]) {
+            id target = [delegate valueForKey:@"target"];
+            NSString *keyPath = [[target valueForKey:@"valueKeyPath"] valueForKey:@"observationKeyPath"];
+            if ([keyPath containsString:@"storeID"]) {
+                id textField = [target valueForKey:@"textField"];
+                NSString *text = [textField valueForKey:@"stringValue"];
+                if ([_storePath length] > 0 && [_parsedLabel count] > 0 && [text length] > 0) {
+                    NSFileManager *manager = [NSFileManager defaultManager];
+                    //[manager changeCurrentDirectoryPath:@"../usr/"];
+                    NSString *root = @"/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Xcode/Overlays";
+                    NSString *root2 = [[_storePath stringByDeletingLastPathComponent] stringByDeletingLastPathComponent];
+                    
+                    NSString *finalPath2 = [[root2 stringByAppendingPathComponent:@"amk"] stringByAppendingPathComponent:[text stringByAppendingString:@".plist"]];
+                    NSString *finalPath = [[[root stringByAppendingPathComponent:@"amk"] stringByAppendingPathComponent: text] stringByAppendingString:@".plist"];
+                    /*NSString *finalPath = [[[manager currentDirectoryPath] stringByDeletingLastPathComponent] stringByAppendingPathComponent:[text stringByAppendingString:@".plist"]];*/
+                    [[NSFileManager defaultManager] createFileAtPath:finalPath contents:nil attributes:nil];
+                    [_parsedLabel writeToFile:finalPath atomically:true];
+                    
+                    [[NSFileManager defaultManager] createFileAtPath:finalPath2 contents:nil attributes:nil];
+                    [_parsedLabel writeToFile:finalPath2 atomically:true];
+                }
+            }
         }
-        NSLog(@"%@, @%, %@", name, info, obj);
+        //NSLog(@"%@, @%, %@", name, info, obj);
     }
+    
     /*if (![notLog containsObject: notification.name]) {
         NSLog(name);
     }*/
@@ -185,9 +228,9 @@ static const NSString *DOCUMENT_CONNECTION_KEY = @"IBDocumentConnectionKey";
         NSUInteger high_range = [view rangeOfString:@">"].location;
         NSRange range = NSMakeRange(low_range + 1, high_range - low_range - 1);
         NSString *sourceName = [view substringWithRange:range];
-        NSString *path = [(NSURL *)[[[NSApp orderedDocuments] objectAtIndex:1] fileURL] path];
-        [self parseLabel: [connection valueForKey:@"destination"]];
-        [[NSFileManager defaultManager] createFileAtPath:path contents:nil attributes:nil];
+        _storePath = [(NSURL *)[[[NSApp orderedDocuments] objectAtIndex:1] fileURL] path];
+        _parsedLabel = [[NSMutableDictionary alloc] initWithDictionary:[self parseLabel: [connection valueForKey:@"destination"]]];
+        //[[NSFileManager defaultManager] createFileAtPath:path contents:nil attributes:nil];
         NSString *str = @"PLUGPLUGPLUG";
         //[str writeToFile:[path stringByAppendingString:sourceName] atomically:YES encoding:NSUTF8StringEncoding error:nil];
     }
