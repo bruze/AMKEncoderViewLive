@@ -25,25 +25,27 @@ static const NSString *DOCUMENT_CONNECTION_KEY = @"IBDocumentConnectionKey";
 
 - (NSDictionary *)parseLabel:(id)abstractLabel {
     NSMutableDictionary *parsedData = [[NSMutableDictionary alloc] init];
-    NSString *text = [abstractLabel valueForKey:@"text"];
-    parsedData[@"text"] = text;
-    id fontDescription = [abstractLabel valueForKey:@"fontDescription"];
-    NSString *fontName = [fontDescription valueForKey:@"description"];
-    parsedData[@"fontName"] = fontName;
-    id marshalled = [fontDescription valueForKey:@"marshalledValue"];
-    if (marshalled != nil) {
-        parsedData[@"pointSize"] = [[marshalled valueForKey:@"pointSize"] stringValue];
-        parsedData[@"type"] = [[marshalled valueForKey:@"type"] stringValue];
-        parsedData[@"weightCategory"] = [[marshalled valueForKey:@"weightCategory"] stringValue];
-    } else {
-        NSLog(@"NOT MARSHALL");
+    if ([abstractLabel respondsToSelector:NSSelectorFromString(@"text")]) {
+        NSString *text = [abstractLabel valueForKey:@"text"];
+        parsedData[@"text"] = text;
+        id fontDescription = [abstractLabel valueForKey:@"fontDescription"];
+        NSString *fontName = [fontDescription valueForKey:@"description"];
+        parsedData[@"fontName"] = fontName;
+        id marshalled = [fontDescription valueForKey:@"marshalledValue"];
+        if (marshalled != nil) {
+            parsedData[@"pointSize"] = [[marshalled valueForKey:@"pointSize"] stringValue];
+            parsedData[@"type"] = [[marshalled valueForKey:@"type"] stringValue];
+            parsedData[@"weightCategory"] = [[marshalled valueForKey:@"weightCategory"] stringValue];
+        } else {
+            NSLog(@"NOT MARSHALL");
+        }
+        NSColor *textColor = [abstractLabel valueForKey:@"textColor"];
+        parsedData[@"textColor"] = [textColor description];
+        /*NSInteger numberOfColors = [[textColor colorSpace] numberOfColorComponents];
+         if (numberOfColors == 3) {
+         
+         }*/
     }
-    NSColor *textColor = [abstractLabel valueForKey:@"textColor"];
-    parsedData[@"textColor"] = [textColor description];
-    /*NSInteger numberOfColors = [[textColor colorSpace] numberOfColorComponents];
-    if (numberOfColors == 3) {
-        
-    }*/
     return parsedData;
 }
 #pragma mark - Initialization
