@@ -64,8 +64,6 @@ static const NSString *DOCUMENT_CONNECTION_KEY = @"IBDocumentConnectionKey";
 - (id)initWithBundle:(NSBundle *)bundle
 {
     if (self = [super init]) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:nil object:nil];
-        
         self.notificationSet = [NSMutableSet new];
         self.parsedLabel = [NSMutableDictionary new];
         self.storePath = @"";
@@ -88,6 +86,7 @@ static const NSString *DOCUMENT_CONNECTION_KEY = @"IBDocumentConnectionKey";
 - (void)applicationDidFinishLaunching:(NSNotification *)notification
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSApplicationDidFinishLaunchingNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:nil object:nil];
     [self initializeAndLog];
 }
 
@@ -163,6 +162,7 @@ static const NSString *DOCUMENT_CONNECTION_KEY = @"IBDocumentConnectionKey";
     /*if (![notLog containsObject: notification.name]) {
         NSLog(name);
     }*/
+    //NSLog(@"%@", notification.name);
 
     if ([notification.name  isEqual: OUTLET_CONNECTION_MADE]) {
         NSConnection *connection = (NSConnection *)info[DOCUMENT_CONNECTION_KEY];
@@ -174,8 +174,11 @@ static const NSString *DOCUMENT_CONNECTION_KEY = @"IBDocumentConnectionKey";
         //NSUInteger high_range = [view rangeOfString:@">"].location;
         //NSRange range = NSMakeRange(low_range + 1, high_range - low_range - 1);
         //NSString *sourceName = [view substringWithRange:range];
-        _storePath = [(NSURL *)[[[NSApp orderedDocuments] objectAtIndex:1] fileURL] path];
-        _parsedLabel = [[NSMutableDictionary alloc] initWithDictionary:[self parseLabel: [connection valueForKey:@"destination"]]];
+        NSArray<NSDocument *> *docs = [NSApp orderedDocuments];
+        if ([docs count] > 0) {
+            _storePath = [(NSURL *)[[docs objectAtIndex:1] fileURL] path];
+            _parsedLabel = [[NSMutableDictionary alloc] initWithDictionary:[self parseLabel: [connection valueForKey:@"destination"]]];
+        }
     }
     //[self.notificationSet addObject:notification.name];
 }
