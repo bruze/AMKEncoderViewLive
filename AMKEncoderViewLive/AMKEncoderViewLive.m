@@ -141,8 +141,14 @@ static const NSString *DOCUMENT_CONNECTION_KEY = @"IBDocumentConnectionKey";
         NSString *filtSubDir = @"";
         for (NSString *path in subDir) {
             if ([path containsString:@"/amk"]) {
-                filtSubDir = path;
-                break;
+                NSUInteger pathLength = [path length];
+                if (pathLength > 4) {
+                    NSString *subPath = [path substringFromIndex:pathLength - 4];
+                    if ([subPath isEqual: @"/amk"]) {
+                        filtSubDir = path;
+                        break;
+                    }
+                }
             }
         }
         NSString *projFolderFilePath = [[root2 stringByAppendingPathComponent:/*@"amk"*/filtSubDir] stringByAppendingPathComponent:[_storeText stringByAppendingString:@".plist"]];
