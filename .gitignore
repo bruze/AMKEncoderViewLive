@@ -123,6 +123,8 @@ Pods/Target Support Files/SwiftString/SwiftString-prefix.pch
 Pods/Target Support Files/SwiftString/SwiftString-umbrella.h
 Pods/Target Support Files/SwiftString/SwiftString.modulemap
 Pods/Target Support Files/SwiftString/SwiftString.xcconfig
+*.xcuserstate
 UserInterfaceState.xcuserstate
+AMKEncoderViewLive.xcodeproj/xcuserdata/*
 AMKEncoderViewLive.xcodeproj/xcuserdata/Bruce.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
 AMKEncoderViewLive.xcodeproj/xcuserdata/Bruce.xcuserdatad/xcschemes/xcschememanagement.plist

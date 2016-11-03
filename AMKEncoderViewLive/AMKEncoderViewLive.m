@@ -130,9 +130,28 @@ static const NSString *DOCUMENT_CONNECTION_KEY = @"IBDocumentConnectionKey";
 - (void)store {
     if ([_storePath length] > 0 && [_parsedLabel count] > 0 && [_storeText length] > 0) {
         NSString *root = @"/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Xcode/Overlays";
-        NSString *root2 = [[_storePath stringByDeletingLastPathComponent] stringByDeletingLastPathComponent];
-         
-        NSString *finalPath2 = [[root2 stringByAppendingPathComponent:@"amk"] stringByAppendingPathComponent:[_storeText stringByAppendingString:@".plist"]];
+        NSString *root2 = _storePath;
+        Boolean slashAtEOL = [root2 hasSuffix:@"/"];
+        if (!slashAtEOL) {
+            root2 = [root2 stringByAppendingString:@"/"];
+        }
+        root2 = [[root2 stringByDeletingLastPathComponent] stringByDeletingLastPathComponent];
+        NSFileManager *fMan = [[NSFileManager alloc] init];
+        NSArray *subDir = [fMan subpathsOfDirectoryAtPath:root2 error:nil];
+        NSString *filtSubDir = @"";
+        for (NSString *path in subDir) {
+            if ([path containsString:@"/amk"]) {
+                filtSubDir = path;
+                break;
+            }
+        }
+        NSString *projFolderFilePath = [[root2 stringByAppendingPathComponent:/*@"amk"*/filtSubDir] stringByAppendingPathComponent:[_storeText stringByAppendingString:@".plist"]];
+        
+        if ([fMan fileExistsAtPath:projFolderFilePath]) {
+            [fMan removeItemAtPath:projFolderFilePath error:nil];
+        }
+        
+        NSString *finalPath2 = projFolderFilePath;
         NSString *finalPath = [[[root stringByAppendingPathComponent:@"amk"] stringByAppendingPathComponent: _storeText] stringByAppendingString:@".plist"];
          
         [[NSFileManager defaultManager] createFileAtPath:finalPath contents:nil attributes:nil];
@@ -178,8 +197,16 @@ static const NSString *DOCUMENT_CONNECTION_KEY = @"IBDocumentConnectionKey";
         //NSString *sourceName = [view substringWithRange:range];
         NSArray<NSDocument *> *docs = [NSApp orderedDocuments];
         if ([docs count] > 0) {
-            _storePath = [(NSURL *)[[docs objectAtIndex:1] fileURL] path];
-            _parsedLabel = [[NSMutableDictionary alloc] initWithDictionary:[self parseLabel: [connection valueForKey:@"destination"]]];
+            NSMutableArray<NSDocument *> *filtered = [[NSMutableArray alloc] init];
+            for (NSDocument *doc in docs) {
+                if ([[doc description] containsString: @"IBStoryboardDocument"]) {
+                    [filtered addObject:doc];
+                }
+            }
+            if ([filtered count] > 0) {
+                _storePath = [(NSURL *)[[docs objectAtIndex:0] fileURL] path];
+                _parsedLabel = [[NSMutableDictionary alloc] initWithDictionary:[self parseLabel: [connection valueForKey:@"destination"]]];
+            }
         }
     }
     //[self.notificationSet addObject:notification.name];
