@@ -159,11 +159,13 @@ static const NSString *DOCUMENT_CONNECTION_KEY = @"IBDocumentConnectionKey";
         
         NSString *finalPath2 = projFolderFilePath;
         NSString *finalPath = [[[root stringByAppendingPathComponent:@"amk"] stringByAppendingPathComponent: _storeText] stringByAppendingString:@".plist"];
-         
-        [[NSFileManager defaultManager] createFileAtPath:finalPath contents:nil attributes:nil];
+        
+        _Bool canSave = [fMan isWritableFileAtPath:finalPath];
+        
+        _Bool success = [fMan createFileAtPath:finalPath contents:nil attributes:nil];
         [_parsedLabel writeToFile:finalPath atomically:true];
          
-        [[NSFileManager defaultManager] createFileAtPath:finalPath2 contents:nil attributes:nil];
+        success = [fMan createFileAtPath:finalPath2 contents:nil attributes:nil];
         [_parsedLabel writeToFile:finalPath2 atomically:true];
     }
 }
