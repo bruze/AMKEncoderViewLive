@@ -85,6 +85,8 @@
 				TargetAttributes = {
 					9DD8239C1D82F195003B2FAC = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 5LH38MMB75;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -212,8 +214,10 @@
 		9DD823AA1D82F196003B2FAC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEPLOYMENT_LOCATION = YES;
+				DEVELOPMENT_TEAM = 5LH38MMB75;
 				DSTROOT = "$(HOME)";
 				INFOPLIST_FILE = AMKEncoderViewLive/Info.plist;
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
@@ -226,8 +230,10 @@
 		9DD823AB1D82F196003B2FAC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEPLOYMENT_LOCATION = YES;
+				DEVELOPMENT_TEAM = 5LH38MMB75;
 				DSTROOT = "$(HOME)";
 				INFOPLIST_FILE = AMKEncoderViewLive/Info.plist;
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";

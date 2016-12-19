@@ -15,8 +15,10 @@ static const NSString *OUTLET_CONNECTION_MADE = @"IBDocumentDidAddConnectionNoti
 static const NSString *DOCUMENT_CONNECTION_KEY = @"IBDocumentConnectionKey";
 @interface AMKEncoderViewLive ()
 - (NSDictionary *)parseLabel:(id)abstractLabel;
-@property (nonatomic, strong) NSMutableSet *notificationSet;
+//@property (nonatomic, strong) NSMutableSet *notificationSet;
+@property (nonatomic, strong) NSMutableArray *notificationSet;
 @property (nonatomic, strong) NSMutableDictionary *parsedLabel;
+@property (nonatomic, strong) NSMutableDictionary *parsedButton;
 @property (nonatomic, strong) NSString *storePath;
 @property (nonatomic, strong) NSString *storeText;
 @end
@@ -48,6 +50,30 @@ static const NSString *DOCUMENT_CONNECTION_KEY = @"IBDocumentConnectionKey";
     }
     return parsedData;
 }
+
+- (NSDictionary *)parseButton:(id)abstractButton {
+    NSMutableDictionary *parsedData = [[NSMutableDictionary alloc] init];
+    /*if ([abstractLabel respondsToSelector:NSSelectorFromString(@"text")]) {
+        NSString *text = [abstractLabel valueForKey:@"text"];
+        parsedData[@"text"] = text;
+        id fontDescription = [abstractLabel valueForKey:@"fontDescription"];
+        NSString *fontName = [fontDescription valueForKey:@"description"];
+        parsedData[@"fontName"] = fontName;
+        id marshalled = [fontDescription valueForKey:@"marshalledValue"];
+        if (marshalled != nil) {
+            parsedData[@"pointSize"] = [[marshalled valueForKey:@"pointSize"] stringValue];
+            parsedData[@"type"] = [[marshalled valueForKey:@"type"] stringValue];
+            parsedData[@"weightCategory"] = [[marshalled valueForKey:@"weightCategory"] stringValue];
+        } else {
+            NSLog(@"NOT MARSHALL");
+        }
+        NSColor *textColor = [abstractLabel valueForKey:@"textColor"];
+        parsedData[@"textColor"] = [textColor description];
+        
+    }*/
+    return parsedData;
+}
+
 #pragma mark - Initialization
 
 + (void)pluginDidLoad:(NSBundle *)plugin
@@ -184,6 +210,11 @@ static const NSString *DOCUMENT_CONNECTION_KEY = @"IBDocumentConnectionKey";
                 if ([_storePath length] > 0 && [_parsedLabel count] > 0 && [text length] > 0) {
                     _storeText = text;
                 }
+            } else if ([keyPath containsString:@"storeButtonID"]) {
+                id textField = [target valueForKey:@"textField"];
+                NSString *text = [textField valueForKey:@"stringValue"];
+                _storePath = text;
+                //_parsedButton = [[NSMutableDictionary alloc] initWithDictionary:[self parseButton: [connection valueForKey:@"destination"]]];
             }
         }
     }
@@ -191,8 +222,20 @@ static const NSString *DOCUMENT_CONNECTION_KEY = @"IBDocumentConnectionKey";
     /*if (![notLog containsObject: notification.name]) {
         NSLog(name);
     }*/
-    //NSLog(@"%@", notification.name);
-
+    if ([notification.name containsString:@"NSControlTextDidEndEditingNotification"]) {
+        NSObject *obj = notification.object;
+        NSLog(@"%@", obj);
+    }
+    NSArray *blackList = @[@"NSApplicationDidUpdateNotification", @"NSApplicationWillUpdateNotification", @"NSWindowDidUpdateNotification"];
+    Boolean contains = false;
+    for (NSString *listed in blackList) {
+        if ([listed isEqual:notification.name]) {
+            contains = true;
+        }
+    }
+    if (!contains) {
+        //NSLog(@"%@", notification.name);
+    }
     if ([notification.name  isEqual: OUTLET_CONNECTION_MADE]) {
         NSConnection *connection = (NSConnection *)info[DOCUMENT_CONNECTION_KEY];
         //NSString *connectionDetails = [connection description];
@@ -216,6 +259,10 @@ static const NSString *DOCUMENT_CONNECTION_KEY = @"IBDocumentConnectionKey";
                 _parsedLabel = [[NSMutableDictionary alloc] initWithDictionary:[self parseLabel: [connection valueForKey:@"destination"]]];
             }
         }
+    }
+    if (![self.notificationSet containsObject:notification.name]) {
+        NSLog(@"%@, %@", notification.name, [notification.object class]);
+        [self.notificationSet addObject:notification.name];
     }
     //[self.notificationSet addObject:notification.name];
 }
